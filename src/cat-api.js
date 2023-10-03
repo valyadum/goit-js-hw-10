@@ -1,6 +1,6 @@
 const MY_KEY = 'live_w7JL5asxVLXOLBgOhKMAnotPTBmgwULsLRvGAUslLCkyNxth6b1C9QQUDGYn8BLh';
 function fetchBreeds() {
-    return fetch("https://api.thecatapi.com/v1/breed").then(response => {
+    return fetch("https://api.thecatapi.com/v1/breeds").then(response => {
         if (!response.ok) {
             throw new Error(`Вимушена помилка ${response.status}`)
         }
