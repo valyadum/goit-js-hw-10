@@ -5,9 +5,10 @@ import SlimSelect from 'slim-select';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 // new SlimSelect({
-//     select: '#single'
+//     select: '#single',
+   
 // })
-// window.alert('hi');
+
 
 const select = document.querySelector('.breed-select');
 const catInfo = document.querySelector('.cat-info');
