@@ -9,7 +9,7 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
    
 // })
 
-
+// ! додати помилку якщо підгружаэться пустий файл, та очистити поле 
 const select = document.querySelector('.breed-select');
 const catInfo = document.querySelector('.cat-info');
 const err = document.querySelector('.error');
@@ -21,6 +21,7 @@ if (select) {
     loader.classList.remove('hide');
 }
 select.addEventListener('change', selectBreed);
+
 
 API.fetchBreeds()
     .then(cats => {
@@ -38,6 +39,10 @@ API.fetchBreeds()
             select.appendChild(option);
             select.classList.remove('hide');
             loader.classList.add('hide');
+            if (catsArray.length === 0) {
+                console.log('uhj');
+            }
+           
         })
     })
     .catch(error => {
@@ -55,8 +60,17 @@ function selectBreed(e) {
     catInfo.innerHTML = '';
     API.fetchCatByBreed(breedId)
         .then(breed => {
+            catInfo.innerHTML = '';
+            if (breed.length === 0) {
+                console.log('err');
+                catInfo.innerHTML = '';
+                Notify.failure('Oops! Something went wrong! This information not fiend!');
+                return
+
+            }
             catInfo.innerHTML = createCard(breed);
             err.classList.add('hide');
+           
         })
         .catch(error => {
             console.log(error);
@@ -64,14 +78,16 @@ function selectBreed(e) {
             // err.classList.remove('hide');
             catInfo.innerHTML = '';
         })
-        .finally(()=>{ loader.classList.add('hide')}   
+        .finally(() => {
+            loader.classList.add('hide')
+        }   
     )
 }
+
 
 let text;
 function createCard(breed) {
     let a = breed.forEach(catBreed => {
-        
         let url = catBreed.url;
         let options = catBreed.breeds;
         text = options.map(({
@@ -87,10 +103,13 @@ function createCard(breed) {
       <h3 class ="temperament-title"> Temperament:<span class= "text"> ${temperament}</span></h3>
        </div> `
         }).join('');
-       
+
+        
     })
+
     return text;
 }
+
 
 
 // countriesList.style.visibility = 'hidden';
